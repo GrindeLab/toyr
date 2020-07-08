@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE, error = TRUE)
 
 Information for this report is pulled from 
 
-- this [book](http://r-pkgs.had.co.nz/intro.html) by Hadley Wickham
+- this [book](http://r-pkgs.had.co.nz/intro.html) (and an [updated version](https://r-pkgs.org/intro.html) of that book) by Hadley Wickham
 - this [blog post](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/) by Hilary Parker
 - this GitHub [help page](https://docs.github.com/en/desktop/contributing-to-projects/adding-an-existing-project-to-github-using-github-desktop)
 
@@ -75,7 +75,7 @@ If all is okay, you should see a message along the lines of `TRUE` or `Your syst
 
 Getting a package started is very easy, thanks to RStudio! Follow these steps:
 
-0. Come up with a name for your package: can consist of letters and numbers, and must start with a letter; other suggestions [here](http://r-pkgs.had.co.nz/package.html)
+0. Come up with a name for your package: can consist of letters and numbers, and must start with a letter; other suggestions [here](https://r-pkgs.org/workflows101.html#naming)
 1. Click `File` > `New Project`
 2. Choose `New Directory`
 3. Then `R Package`
@@ -291,7 +291,7 @@ library(devtools)
 install_github("GrindeLab/toyr")
 ```
 
-# Additional Steps
+# Updating the Package
 
 ## Editing the Package Description
 
@@ -300,6 +300,19 @@ install_github("GrindeLab/toyr")
 ## Creating Vignettes
 
 (under construction)
+
+To create your first vignette, run: 
+
+```{r, eval = FALSE}
+usethis::use_vignette("my-vignette")
+```
+
+This will:
+
+- Create a new directory called `vignettes/` 
+- Update the `DESCRIPTION` file 
+- Created a draft vignette `vignettes/my-vignette.Rmd`
+
 
 ## Adding a README
 
