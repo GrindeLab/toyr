@@ -1,0 +1,260 @@
+---
+title: "Creating an R Package"
+author: "Kelsey Grinde"
+date: "7/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+```
+
+# References
+
+Information for this report is pulled from 
+
+- this [book](http://r-pkgs.had.co.nz/intro.html) by Hadley Wickham
+- this [blog post](https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/) by Hilary Parker
+
+# Setup
+
+Before you get started, you may need to install and/or update some applications and R packages. 
+
+## Update R and RStudio
+
+You'll need recent versions of R (at least 3.5.0) and RStudio (at least 1.2.5042). To check what versions you're currently running:
+
+```{r check-versions, eval = FALSE}
+# install (if not already installed) this package
+install.packages("rstudioapi")
+
+# check versions
+R.Version()  # version string should be at least 3.5.0
+rstudioapi::versionInfo()  # version should be at least 1.2.5042
+```
+
+If either of these needs updating, do the following:
+
+- Update R: [download](https://www.r-project.org/) the new version 
+- Update RStudio: click `Help` > `Check for Updates`
+
+## R Packages
+
+Run the following code to install some packages that you'll need (remember you only need to install packages once):
+
+```{r install-packages, eval = FALSE}
+install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
+```
+
+## Rtools or XCode 
+
+Finally, you'll need some additional tools that can be installed as follows:
+
+- Windows: download and install [Rtools](https://cran.r-project.org/bin/windows/Rtools/)
+- Mac: make sure you have XCode (free in the App Store) or the [Command Line Tools for XCode](http://developer.apple.com/downloads)
+
+## Confirmation Step
+
+Once you've done all of the above, you can check that everything went smoothly by running the following code:
+
+```{r check-setup, eval = FALSE}
+library(devtools)
+has_devel()
+```
+
+If all is okay, you should see a message along the lines of `TRUE` or `Your system is ready to build packages!`. 
+
+
+# Creating a Package
+
+Getting a package started is very easy, thanks to RStudio! Follow these steps:
+
+0. Come up with a name for your package: can consist of letters and numbers, and must start with a letter; other suggestions [here](http://r-pkgs.had.co.nz/package.html)
+1. Click `File` > `New Project`
+2. Choose `New Directory`
+3. Then `R Package`
+4. Type in the name of your package under `Package name:`
+5. Click `Create Project`
+
+
+This will create a new package containing six components:
+
+- A `DESCRIPTION` file, which stores important metadata about your package (you'll edit this)
+- A `NAMESPACE` file, which helps your package interact nicely with other packages (you will not edit this directly) 
+- An `R/` directory, which is where you'll store all R code for your package (you'll edit this)
+- A `man/` directory, which stores impor=tant documentation for each of the objects in your package (like the `NAMESPACE`, you won't edit this directly but it will be updated via the process described below)
+- A `pkgname.Rproj` file, which makes your package easy to use with RStudio (leave this alone)
+- A `.Rbuildignore` file, which you may edit if there are directories/files that you ultimately do not want to be included in your package bundle
+
+
+# Adding a Function
+
+Suppose you want to add the following function to your package:
+
+```{r}
+toy_function <- function() {
+  print("This is a function")
+}
+```
+
+To add this to your package, create a new file in the `R/` directory called `toy_function.R`:
+
+1. Click `File` > `New File` > `R Script`
+2. Copy the function above and past it into the new file
+3. Save the file (call it `toy_function.R` and make sure it's saved in the `R/` directory)
+
+# Adding Comments to the Function
+
+Thanks to the `roxygen2` package, it's fairly easy to add documentation for your new`toy_function` function to your package. You'll do this by adding comments to the beginning of each function; those comments will later be compiled into correctly formatted package documentation.
+
+The general workflow for adding documentation is as follows:
+
+1. Add roxygen comments to `.R` files
+2. Run `devtools::document()` to convert those comments to `.Rd` files in the `man/` directory
+3. Preview documentation using `?functionname`
+4. Repeat until you're satisfied with how the documentation looks
+
+You'll use roxygen comments to provide the following information for the function:
+
+- what it is (TITLE)
+- what it does (DESCRIPTION)
+- what arguments it takes (@param)
+- what outputs it returns (@return)
+- how it works (@examples)
+- what other functions or resources it's related to (@seealso)
+- whether it's visible to the user (@export)
+
+Roxygen comments always start with the characters `#'`.  Here's the structure of a roxygen block for a typical function:
+
+```{r, eval = FALSE}
+#' A short (one line) title.
+#' 
+#' Here is where you should briefly describe (less than one
+#' paragraph) what the function is supposed to do.
+#' 
+#' @param arg1 A description of the type of the first parameter
+#'   (e.g., string, numeric vector) and what it does
+#' @param arg2 A description of the second parameter. If it has
+#'   has a default value, you should also mention that here.
+#' 
+#' @return A description of the output from the function.
+#' 
+#' @examples
+#' function(arg1 = value1, arg2 = value2)
+#' 
+#' @seealso This website \url{http://useful-url.com}, this
+#'   this function in our package \code{\link{functionname}}, 
+#'   and this one in another package \code{\link[pkgname]{functionname}}
+#'
+#' @export
+```
+
+For more details, read [this](http://r-pkgs.had.co.nz/man.html).
+
+To add documentation to your `toy_function` function
+
+1. Add roxygen comments to your `toy_function.R` file so that it now looks like this:  
+
+```{r, eval = FALSE}
+#' A toy function. 
+#' 
+#' This function prints out a simple, not very useful, message.
+#' 
+#' @return None. The function simply prints out a message.
+#' 
+#' @examples
+#' toy_function()
+#' 
+#' @seealso The general \code{\link[base]{print}} function.
+#' 
+#' @export
+toy_function <- function() {
+  print("This is a function")
+}
+```
+
+2. Process this documentation by running `devtools::document()`. Check that this created a new `toy_function.Rd` file in the `man/` directory. It should also add `export(toy_function)` to the `NAMESPACE` file (if this didn't happen, delete the `NAMESPACE` file and try running `devtools::document()` again.)
+3. Preview the documentation by running `?toy_function`. This should open a help page populated with the (nicely formatted) information from your roxygen comments.
+4. Repeat steps 1-3, as needed.
+
+
+# Adding Comments for the Package
+
+You can also use roxygen comments to create a help page for your package as a whole, which will be accessible using `package?toyr`. Use this to describe the most important components of your package (but you'll probably want to supplement with vignettes, as well). 
+
+First, you'll need to create new file in the `R/` directory called `pkgname.R`.
+
+Then, fill out this file with roxygen comments, attached to a `NULL` object, according to this general structure: 
+
+```{r, eval = FALSE}
+#' pkgname: A title for the package.
+#'
+#' Here is where you should describe what the 
+#' package is supposed to do. For example, it is 
+#' useful to describe what categories of functions 
+#' the package provides.
+#' 
+#' @docType package
+#' @name pkgname
+NULL
+```
+
+
+For example, here's what you might put in your `toyr.R` file:
+
+```{r, eval = FALSE}
+#' toyr: A toy package.
+#'
+#' This package contains one simple, not very 
+#' useful function. It was created for demonstration
+#' purposes. 
+#' 
+#' @docType package
+#' @name toyr
+NULL
+```
+
+Create and update this `toyr.R` file, and then run `devtools::document()`. This should produce a new file `man/toyr.Rd` and 
+
+# Editing the Package Description
+
+(under construction)
+
+# Creating Vignettes
+
+(under construction)
+
+# Updating .Rbuildignore
+
+(under construction)
+
+# Installing the Package
+
+1. Delete the `R/hello.R` and `man/hello.Rd` files that were autopopulated when you created the package.
+2. Run:
+
+```{r, eval = FALSE}
+devtools::install()
+```
+
+Try typing `?toy_function`  to see if the standard help pages pop up.
+
+# Checking the Package
+
+(under construction)
+
+```{r, eval = FALSE}
+devtools::check()
+```
+
+# Making the Package a GitHub Repo
+
+(under construction)
+
+1. Click `Tools` > `Version Control` > `Project Setup`
+2. Set the version control system from "None" to "Git"
+3. Click "Yes" (we want to create a new git repository).
+4. Click "Yes" to restart RStudio.
+
+You should now see a `Git` tab in the `Environment`/`History`/etc. panel.  Click the `Commit` button. Select the files you want to add to your first commit (probably all of them). 
+
