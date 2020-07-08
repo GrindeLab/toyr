@@ -313,6 +313,12 @@ This will:
 - Update the `DESCRIPTION` file 
 - Created a draft vignette `vignettes/my-vignette.Rmd`
 
+Update the YAML header: 
+
+- Add `author: "Your Name"`
+- Add `date: "Date Last Updated"`
+
+
 
 ## Adding a README
 

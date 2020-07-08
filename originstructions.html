@@ -1521,7 +1521,7 @@ div.tocify {
 <h1>References</h1>
 <p>Information for this report is pulled from</p>
 <ul>
-<li>this <a href="http://r-pkgs.had.co.nz/intro.html">book</a> by Hadley Wickham</li>
+<li>this <a href="http://r-pkgs.had.co.nz/intro.html">book</a> (and an <a href="https://r-pkgs.org/intro.html">updated version</a> of that book) by Hadley Wickham</li>
 <li>this <a href="https://hilaryparker.com/2014/04/29/writing-an-r-package-from-scratch/">blog post</a> by Hilary Parker</li>
 <li>this GitHub <a href="https://docs.github.com/en/desktop/contributing-to-projects/adding-an-existing-project-to-github-using-github-desktop">help page</a></li>
 </ul>
@@ -1571,7 +1571,7 @@ has_devel()</code></pre>
 <h2>Getting Started</h2>
 <p>Getting a package started is very easy, thanks to RStudio! Follow these steps:</p>
 <ol start="0" style="list-style-type: decimal">
-<li>Come up with a name for your package: can consist of letters and numbers, and must start with a letter; other suggestions <a href="http://r-pkgs.had.co.nz/package.html">here</a></li>
+<li>Come up with a name for your package: can consist of letters and numbers, and must start with a letter; other suggestions <a href="https://r-pkgs.org/workflows101.html#naming">here</a></li>
 <li>Click <code>File</code> &gt; <code>New Project</code></li>
 <li>Choose <code>New Directory</code></li>
 <li>Then <code>R Package</code></li>
@@ -1755,6 +1755,19 @@ install_github(&quot;GrindeLab/toyr&quot;)</code></pre>
 <div id="creating-vignettes" class="section level2">
 <h2>Creating Vignettes</h2>
 <p>(under construction)</p>
+<p>To create your first vignette, run:</p>
+<pre class="r"><code>usethis::use_vignette(&quot;my-vignette&quot;)</code></pre>
+<p>This will:</p>
+<ul>
+<li>Create a new directory called <code>vignettes/</code></li>
+<li>Update the <code>DESCRIPTION</code> file</li>
+<li>Created a draft vignette <code>vignettes/my-vignette.Rmd</code></li>
+</ul>
+<p>Update the YAML header:</p>
+<ul>
+<li>Add <code>author: &quot;Your Name&quot;</code></li>
+<li>Add <code>date: &quot;Date Last Updated&quot;</code></li>
+</ul>
 </div>
 <div id="adding-a-readme" class="section level2">
 <h2>Adding a README</h2>
