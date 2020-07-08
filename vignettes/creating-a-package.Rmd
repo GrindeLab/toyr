@@ -301,6 +301,12 @@ library(devtools)
 install_github("GrindeLab/toyr")
 ```
 
+Note that when you install a package from GitHub using `install_github`, it by default will not build vignettes. To force this to happen, run:
+
+```{r, eval = FALSE}
+devtools::install_github('GrindeLab/toyr', build_vignettes = TRUE)
+```
+
 # Updating the Package
 
 ## Editing the Package Description
@@ -353,6 +359,13 @@ Then, install the package by running:
 ```{r, eval = FALSE}
 devtools::install()
 ```
+Check for vignettes by running:
+
+```{r, eval = FALSE}
+browseVignettes('toyr')
+```
+
+(If you're getting a `no vignettes found` error message here, you may need to `Install` > `Install from: Package Archive File`. Then try running `browseVignettes` again.)
 
 ## Adding a README
 
