@@ -40,8 +40,13 @@ library(toyr)
 toy_function()
 ```
 
+The package also contains an example dataset:
 
-See the `creating-a-package` vignette for the useful part of this package!
+```{r example-data}
+example_df
+```
+
+But the most useful part of this package is the `creating-a-package` vignette. Take a look!
 
 ```{r vignettes, eval = FALSE}
 browseVignettes("toyr")

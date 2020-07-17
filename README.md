@@ -35,8 +35,25 @@ toy_function()
 #> [1] "This is a function"
 ```
 
-See the `creating-a-package` vignette for the useful part of this
-package\!
+The package also contains an example dataset:
+
+``` r
+example_df
+#>     x          y
+#> 1   3  1.5701540
+#> 2   5  1.4741215
+#> 3  10  0.2090001
+#> 4   4 -1.7738619
+#> 5   1 -1.3708356
+#> 6   2 -0.6349355
+#> 7   7 -2.2906877
+#> 8   9  0.3036168
+#> 9   6  0.2898140
+#> 10  8 -0.2464157
+```
+
+But the most useful part of this package is the `creating-a-package`
+vignette. Take a look\!
 
 ``` r
 browseVignettes("toyr")
