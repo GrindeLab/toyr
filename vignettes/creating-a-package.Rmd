@@ -14,7 +14,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  error = TRUE
 )
 ```
 
@@ -36,15 +37,19 @@ Before you get started, you may need to install and/or update some applications 
 
 ## Update R and RStudio
 
-You'll need recent versions of R (at least 3.5.0) and RStudio (at least 1.2.5042). To check what versions you're currently running:
+You'll need recent versions of R (at least 3.5.0) and RStudio (at least 1.2.5042). 
 
-```{r check-versions, eval = FALSE}
-# install (if not already installed) this package
+To check what versions you're currently running, you'll first need to install the `rstudioapi` package (if you haven't already). Run this code chunk to install:
+
+```{r install-rstudioapi, eval = FALSE}
 install.packages("rstudioapi")
+```
 
-# check versions
-R.Version()  # version string should be at least 3.5.0
-RStudio.Version()  # version should be at least 1.2.5042
+Then you can use these functions to check what versions of R and RStudio you have:
+
+```{r check-versions, eval = TRUE}
+getRversion()  # at least 3.5.0
+rstudioapi::versionInfo()$version # at least 1.2.5042
 ```
 
 If either of these needs updating, do the following:
@@ -54,10 +59,18 @@ If either of these needs updating, do the following:
 
 ## Install R Packages
 
-Run the following code to install some packages that you'll need:
+There are a number of R packages that make creating a *new* R package much easier. 
+
+You probably already have two of these packages: `knitr` and `rmarkdown`. If not, run the code chunk below:
+
+```{r install-packages-part1, eval = FALSE}
+install.packages(c("knitr", "rmarkdown"))
+```
+
+We also need three other packages which you more likely have not yet installed. Run this code chunk to install: 
 
 ```{r install-packages, eval = FALSE}
-install.packages(c("devtools", "roxygen2", "testthat", "knitr"))
+install.packages(c("devtools", "roxygen2", "testthat"))
 ```
 
 ## Install Rtools or XCode 
@@ -71,7 +84,7 @@ Finally, you'll need some additional tools that can be installed as follows:
 
 Once you've done all of the above, you can check that everything went smoothly by running the following code:
 
-```{r check-setup, eval = FALSE}
+```{r check-setup, eval = TRUE}
 library(devtools)
 has_devel()
 ```
@@ -107,7 +120,7 @@ This will create a new package containing six components:
 
 Suppose you want to add the following function to your package:
 
-```{r}
+```{r, eval = FALSE}
 toy_function <- function() {
   print("This is a function")
 }
@@ -115,11 +128,30 @@ toy_function <- function() {
 
 To add this to your package, create a new file in the `R/` directory called `toy_function.R`:
 
-1. Click `File` > `New File` > `R Script`
+1. Click `File` > `New File` > `R Script` 
 2. Copy the function above and past it into the new file
 3. Save the file (call it `toy_function.R` and make sure it's saved in the `R/` directory)
 
-## Adding Comments to the Function
+*Note: you can also accomplish Steps 1 and 3 by running the code chunk above to define `toy_function` and then running `use_r("toy_function")`. This will create and open `R/toy_function.R` and then you just need to complete Step 2 and save.*
+
+
+## Test the Function
+
+To test whether the new `toy_function` works, call `load_all()` to make the function available for interactive use:
+
+```{r, eval = FALSE}
+load_all()
+```
+
+then call `toy_function()` to see how it works:
+
+```{r}
+toy_function()
+```
+
+Note that `load_all()` simulates the process of building, installing, and loading the `toyr` package, rather than just adding the functions in the `toyr` package to your Global Environment so you can work with them (which would be another option).
+
+## Documenting the Function
 
 Thanks to the `roxygen2` package, it's fairly easy to add documentation to your package for your new function. You'll do this by adding comments to the beginning of each function; those comments will later be compiled into correctly formatted package documentation.
 
@@ -311,7 +343,28 @@ devtools::install_github('GrindeLab/toyr', build_vignettes = TRUE)
 
 ## Editing the Package Description
 
-(under construction)
+The `DESCRIPTION` file contains important metadata about your package. At minimimum, you should make the following edits:
+
+1. Give your package a `Title`. Follow these recommendations: 
+    - should be a short, one line description of your package
+    - $\le$ 65 characters
+    - use title case
+    - don't use any markup
+    - don't end with a period
+    - e.g., "Toy Package for Making R Packages"
+2. Make yourself the author. Follow these recommendations: 
+    - use the `Authors@R` field instead of `Author` and `Maintainer`
+    - use the R code `person("First", "Last", email = "email@email.com", role = c("aut", "cre"))` to list yourself as both the author (aut) and maintainer (cre)
+    - you can also list multiple authors; more info [here](https://r-pkgs.org/description.html#author)
+3. Write a description of your package in the `Description` field.  
+    - this should be more detailed than the title
+    - you can use multiple sentences, but no more than one paragraph
+    - you should split text across multiple lines, with no more than 80 characters per line
+    - indent new lines with 4 spaces
+4. Add a license to indicate who can use your package (and how they can use it).  
+    - the [MIT](https://tldrlegal.com/license/mit-license) is often used; it lets people use and distribute your code freely as long as the license is always distributed with the code
+    - to use the MIT license run `use_mit_license("Your Name")`; this will add "MIT + file LICENSE" to the `License` field of the `DESCRIPTION` file; it also creates the `LICENSE` and `LICENSE.md` files with more details about the license, and adds `LICENSE.md` to the `.Rbuildignore` file
+    - more details, including other license options, [here](https://r-pkgs.org/whole-game.html#use_mit_license) and [here]()
 
 ## Creating Vignettes
 
