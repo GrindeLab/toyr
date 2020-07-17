@@ -37,3 +37,7 @@ toy_function()
 
 See the `creating-a-package` vignette for the useful part of this
 package\!
+
+``` r
+browseVignettes("toyr")
+```
