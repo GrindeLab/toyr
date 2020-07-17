@@ -519,5 +519,5 @@ Next, you'll need to document your data, just as you've documented the R code in
 "example_df"
 ```
 3. Run `devtools::document()` to convert those comments to `.Rd` files in the `man/` directory
-3. Preview documentation using `?functionname`
+3. Preview documentation using `?example_df`
 

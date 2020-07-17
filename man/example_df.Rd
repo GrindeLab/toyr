@@ -7,8 +7,8 @@
 \format{
 A data frame with 10 rows and 2 variables:
 \describe{
-  \item{x}{first variable, random sample, without replacement, of integers from 1 to 10}
-  \item{y}{second variable, random sample of size 10 from standard normal distribution}
+  \item{x}{first variable, sample without replacement of integers from 1 to 10}
+  \item{y}{second variable, a random sample of size 10 from standard normal distribution}
 }
 }
 \source{
