@@ -500,4 +500,24 @@ usethis::use_data(example_df)
 
 When you run this function for the first time, it will create a new `data/` directory and save your data in there as a file called `exampel_df.rda`. 
 
+Next, you'll need to document your data, just as you've documented the R code in your package.
+
+1. Create a new file `R/data.R` by running `usethis::use_r("data")`
+2. Add roxygen comments attached to the name of your data (e.g., "example_df"). Must include `@format` and `@source` tags, and must not use `@export`. More details [here](https://r-pkgs.org/data.html).
+```
+#' Example dataset.
+#'
+#' A dataset containing two randomly generated variables.
+#'
+#' @format A data frame with 10 rows and 2 variables:
+#' \describe{
+#'   \item{x}{first variable, random sample, without replacement, of integers from 1 to 10}
+#'   \item{y}{second variable, random sample of size 10 from standard normal distribution}
+#' }
+#'
+#' @source \code{example_df <- data.frame(x = sample(10), y = rnorm(10))}
+"example_df"
+```
+3. Run `devtools::document()` to convert those comments to `.Rd` files in the `man/` directory
+3. Preview documentation using `?functionname`
 
