@@ -483,6 +483,21 @@ devtools::check()
 
 ## Adding Data
 
-(under construction)
+Sometimes, it may be of interest to include data in your package. For example, it can be useful to provide example data to which your functions can be applied. 
+
+Example data is best stored as an `.Rdata` file in the `data/` folder within your package. The easiest way to add data in this way is to use the `use_data()` function. For example, suppose we wanted to add an example data frame to our package. First, we need to create the object:
+
+```{r, eval = TRUE}
+example_df <- data.frame(x = sample(10), y = rnorm(10))
+print(example_df)
+```
+
+Then 
+
+```{r, eval = FALSE}
+usethis::use_data(example_df)
+```
+
+When you run this function for the first time, it will create a new `data/` directory and save your data in there as a file called `exampel_df.rda`. 
 
 
