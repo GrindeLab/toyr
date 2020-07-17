@@ -135,7 +135,7 @@ To add this to your package, create a new file in the `R/` directory called `toy
 *Note: you can also accomplish Steps 1 and 3 by running the code chunk above to define `toy_function` and then running `use_r("toy_function")`. This will create and open `R/toy_function.R` and then you just need to complete Step 2 and save.*
 
 
-## Test the Function
+## Testing the Function
 
 To test whether the new `toy_function` works, call `load_all()` to make the function available for interactive use:
 
@@ -366,6 +366,21 @@ The `DESCRIPTION` file contains important metadata about your package. At minimi
     - to use the MIT license run `use_mit_license("Your Name")`; this will add "MIT + file LICENSE" to the `License` field of the `DESCRIPTION` file; it also creates the `LICENSE` and `LICENSE.md` files with more details about the license, and adds `LICENSE.md` to the `.Rbuildignore` file
     - more details, including other license options, [here](https://r-pkgs.org/whole-game.html#use_mit_license) and [here]()
 
+Once you've made these updates, check your package:
+
+```{r, eval = FALSE}
+devtools::check()
+```
+
+You should no longer see a `WARNING` message about having a non-standard license.
+
+Assuming everything looks okay, install the package:
+
+```{r, eval = FALSE}
+devtools::install()
+```
+
+
 ## Creating Vignettes
 
 (under construction)
@@ -424,11 +439,31 @@ browseVignettes('toyr')
 
 (under construction)
 
+To initialize a basic `README.Rmd` file, run `use_readme_rmd()`:
+
+```{r, eval = FALSE}
+usethis::use_readme_rmd()
+```
+
+Open the newly created `README.Rmd`. Update the following:
+
+- describe the purpose of your package (see the pkgname section) (feel free to copy from your `DESCRIPTION` file)
+- update the installation information (e.g., delete the info about CRAN if your package is not on there yet)
+- show some examples of how to use your package
+
+Once you've updated this RMarkdown file to your satisfaction, you'll need to render it to make `README.md`:
+
+```{r, eval = FALSE}
+rmarkdown::render("README.Rmd")
+```
+
+Next, you should commit and push to GitHub. 
+
 ## Updating .Rbuildignore
 
-(under construction)
+You may have noticed in some of the steps above that `.Rbuildignore` is sometimes automatically updated by `devtools` functions.
 
-Sometimes there may be files that you don't want included in your R package. For example, I have two files, `originstructions.Rmd` and `originstructions.html`, that I had originally used to document the steps  for creating a package; however, I have since moved that information to this vignette, so I do not want these original files to be included in the R package.
+Otherwise, there may be files that you've created that you don't actually want included in your R package. For example, I have two files, `originstructions.Rmd` and `originstructions.html`, that I had originally used to document the steps  for creating a package; however, I have since moved that information to this vignette, so I do not want these original files to be included in the R package. Here's how I added them to `.Rbuildignore`:
 
 ```{r, echo = FALSE, eval = FALSE}
 # ignore original instructions files (moved to vignettes)
