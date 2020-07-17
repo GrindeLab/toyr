@@ -47,7 +47,7 @@ install.packages("rstudioapi")
 
 Then you can use these functions to check what versions of R and RStudio you have:
 
-```{r check-versions, eval = TRUE}
+```{r check-versions, eval = FALSE}
 getRversion()  # at least 3.5.0
 rstudioapi::versionInfo()$version # at least 1.2.5042
 ```
@@ -84,7 +84,7 @@ Finally, you'll need some additional tools that can be installed as follows:
 
 Once you've done all of the above, you can check that everything went smoothly by running the following code:
 
-```{r check-setup, eval = TRUE}
+```{r check-setup, eval = FALSE}
 library(devtools)
 has_devel()
 ```
@@ -275,12 +275,21 @@ devtools::document()
 This should produce a new file `man/toyr.Rd`. 
 
 
+## Checking the Package
+
+While you're working on the package, and before wrapping things up, it's a good idea to run `check()` to make sure everything looks okay:
+
+```{r, eval = FALSE}
+devtools::check()
+```
 
 ## Installing the Package
 
-When we created the R package, RStudio autopopulated the `R/` and `man/` directories with two files: `hello.R` and `hello.Rd`, respectively. You don't need these files for your package, so go ahead and delete them now. 
+Now, we're finally ready to install our R package.
 
-Then, install the package by running:
+*Note: when we created the R package, RStudio autopopulated the `R/` and `man/` directories with two files: `hello.R` and `hello.Rd`, respectively. You don't need these files for your package, so go ahead and delete them now.*
+
+Install the package by running:
 
 ```{r, eval = FALSE}
 devtools::install()
@@ -288,13 +297,6 @@ devtools::install()
 
 Try typing `?toy_function` to see if the standard help pages pop up.
 
-## Checking the Package
-
-(under construction)
-
-```{r, eval = FALSE}
-devtools::check()
-```
 
 # Putting the Package on GitHub
 
@@ -324,7 +326,7 @@ You should now be able to see your repository on GitHub. Take a look to make sur
 
 ## Installing a Package from GitHub
 
-(under construction; your repository needs to be public in order for this to work)
+*Note: your repository needs to be public in order for this to work*
 
 Run `install_github("usrname/pkgname")`. For example:
 
@@ -437,8 +439,6 @@ browseVignettes('toyr')
 
 ## Adding a README
 
-(under construction)
-
 To initialize a basic `README.Rmd` file, run `use_readme_rmd()`:
 
 ```{r, eval = FALSE}
@@ -451,10 +451,16 @@ Open the newly created `README.Rmd`. Update the following:
 - update the installation information (e.g., delete the info about CRAN if your package is not on there yet)
 - show some examples of how to use your package
 
-Once you've updated this RMarkdown file to your satisfaction, you'll need to render it to make `README.md`:
+Once you've updated this RMarkdown file to your satisfaction (and saved your changes), you'll need to render it to make `README.md`:
 
 ```{r, eval = FALSE}
 rmarkdown::render("README.Rmd")
+```
+
+I'd recommend adding "README.html" to the list of files that get ignored when you build your package (otherwise you may get a note about it from the `check()` function). Here's how to add tell R to ignore this file:  
+
+```{r, eval = FALSE}
+usethis::use_build_ignore("README.html")
 ```
 
 Next, you should commit and push to GitHub. 
@@ -466,12 +472,19 @@ You may have noticed in some of the steps above that `.Rbuildignore` is sometime
 Otherwise, there may be files that you've created that you don't actually want included in your R package. For example, I have two files, `originstructions.Rmd` and `originstructions.html`, that I had originally used to document the steps  for creating a package; however, I have since moved that information to this vignette, so I do not want these original files to be included in the R package. Here's how I added them to `.Rbuildignore`:
 
 ```{r, echo = FALSE, eval = FALSE}
-# ignore original instructions files (moved to vignettes)
-use_build_ignore("originstructions.html")
-use_build_ignore("originstructions.Rmd")
+usethis::use_build_ignore("originstructions.html")
+usethis::use_build_ignore("originstructions.Rmd")
+```
 
+```{r, eval = FALSE}
 # update package and check
 devtools::document()
 devtools::install()
 devtools::check()
 ```
+
+## Adding Data
+
+(under construction)
+
+
