@@ -285,7 +285,7 @@ devtools::check()
 
 ## Installing the Package
 
-Now, we're finally ready to install our R package.
+Now, we're finally ready to build and install our R package.
 
 *Note: when we created the R package, RStudio autopopulated the `R/` and `man/` directories with two files: `hello.R` and `hello.Rd`, respectively. You don't need these files for your package, so go ahead and delete them now.*
 
@@ -385,8 +385,6 @@ devtools::install()
 
 ## Creating Vignettes
 
-(under construction)
-
 To create your first vignette, run: 
 
 ```{r, eval = FALSE}
@@ -420,7 +418,6 @@ Edit this `.Rmd` file and `Knit` as you would with any other RMarkdown file.
 After adding your content, run the following to build the vignette.
 
 ```{r, eval = FALSE}
-devtools::document()
 devtools::build()
 ```
 
@@ -429,6 +426,7 @@ Then, install the package by running:
 ```{r, eval = FALSE}
 devtools::install()
 ```
+
 Check for vignettes by running:
 
 ```{r, eval = FALSE}
