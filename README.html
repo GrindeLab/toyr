@@ -611,7 +611,8 @@ body {
 <h2 id="installation">Installation</h2>
 <p>You can install the development version of toyr from <a href="https://github.com/">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># install.packages(&quot;devtools&quot;)</span></a>
-<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;GrindeLab/toyr&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;GrindeLab/toyr&quot;</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>To make sure you can view vignettes (the useful part of this package), don’t forget the <code>build_vignettes = TRUE</code> argument.</p>
 <h2 id="example">Example</h2>
 <p>This is a basic example which shows you how to use the one and only function in this package:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(toyr)</a>

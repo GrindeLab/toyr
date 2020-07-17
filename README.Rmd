@@ -26,8 +26,11 @@ You can install the development version of toyr from [GitHub](https://github.com
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("GrindeLab/toyr")
+devtools::install_github("GrindeLab/toyr", build_vignettes = TRUE)
 ```
+
+To make sure you can view vignettes (the useful part of this package), don't forget the `build_vignettes = TRUE` argument. 
+
 ## Example
 
 This is a basic example which shows you how to use the one and only function in this package:
